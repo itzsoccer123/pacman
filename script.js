@@ -272,6 +272,7 @@ for (i of ghosts) {
 	  
         // score = "game over"
         pac.lives -= 1 
+	score = 0;
         if (pac.lives === 0) {
 		score = "game over"
 		noLoop();
