@@ -258,7 +258,8 @@ function draw() {
 // ghost showing 
 for (i of ghosts) {
 
-i.circle_show()
+// i.circle_show()
+	i.ghost_pink();
 }
 // ghosts[0].ghost_pink()
 // ghosts[1].ghost_blue()
