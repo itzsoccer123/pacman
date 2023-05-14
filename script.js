@@ -6,7 +6,7 @@ function preload() {
     // pac_man =  loadImage("man.png")
     // blue_ghost = loadImage("blue_ghost.png")    
     // orange_ghost = loadImage("orange_ghost.png")
-    // pink_ghost = loadImage("pink_ghost.png")
+    pink_ghost = loadImage("pink_ghost.png")
     // red_ghost = loadImage("red_ghost.png")
     print('done')
 }
@@ -1049,7 +1049,7 @@ class ghost {
     }
     ghost_pink() {
         // image(pink_ghost,this.x,this.y,this.w,this.h)
-        // image(pink_ghost,this.x,this.y,this.w,this.h)
+        image(pink_ghost,this.x,this.y,this.w,this.h)
         this.check_border()
     }
     ghost_red() {
