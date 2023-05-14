@@ -3,12 +3,12 @@ let start
 let dinners = [] 
 let ghosts = []
 function preload() {
-    pac_man =  loadImage("man.png")
-    blue_ghost = loadImage("blue_ghost.png")    
-    orange_ghost = loadImage("orange_ghost.png")
-    pink_ghost = loadImage("pink_ghost.png")
-    red_ghost = loadImage("red_ghost.png")
-
+    // pac_man =  loadImage("man.png")
+    // blue_ghost = loadImage("blue_ghost.png")    
+    // orange_ghost = loadImage("orange_ghost.png")
+    // pink_ghost = loadImage("pink_ghost.png")
+    // red_ghost = loadImage("red_ghost.png")
+    print('done')
 }
 let game_over = false
 let game_won = false
@@ -126,11 +126,11 @@ ghosts = []
     handleWalls.walls = walls 
   // delete_extra_food(30)
 calculate_total_points()
-  for (i of ghosts) {
-           make_sure_dist(i,200) 
-          respawn_ghost(i)
+//   for (i of ghosts) {
+//            make_sure_dist(i,200) 
+//           respawn_ghost(i)
          
-  }
+//   }
 }// 
 function random(x,y) {
     Math.round(Math.random()*(y-x) + x)
@@ -149,6 +149,9 @@ function make_sure_dist(i,dist_away_in_px) {
 let walls = [] 
 let pac;
 function mousePressed() {
+  
+    // dinners.push(new food(804,309,5,5,1,0))
+  
     // if (mouseIsPressed) {
     // if (chosing_pos) {
     //     chosing_pos = false 
@@ -190,9 +193,9 @@ function draw() {
             // down:1,
         }
     // print(mouseX)
- for (i of ghosts) {
-     window.setInterval(i.start_moving_sec(3),1000)
- }
+//  for (i of ghosts) {
+//      window.setInterval(i.start_moving_sec(3),1000)
+//  }
 
     imageMode(CENTER)
     angleMode(DEGREES)
@@ -255,20 +258,34 @@ function draw() {
 // ghost showing 
 for (i of ghosts) {
 
-i.ghost_pink()
+i.circle_show()
 }
+// ghosts[0].ghost_pink()
+// ghosts[1].ghost_blue()
+// ghosts[2].ghost_orange()
+// ghosts[3].ghost_red()
 // detecting pac in ghost 
 for (i of ghosts) {
-    if (i.collision(pac.x,pac.y,pac.w)== true && game_winner_decided=== false) {
+    // if (i.collision(pac.x,pac.y,pac.w)== true && game_winner_decided=== false) {
+    if (i.collided(pac) && !game_winner_decided) {
       //  print("game over")
-        score = "game over       "
+        // score = "game over"
+        pac.lives -= 1 
         game_over = true  
+        // setup()
+        lvl_1()
+        draw()
                  
     }
 }
 // food spawnning 
-    
-   
+if (mouseIsPressed) {
+
+    // dinners.push(new food(mouseX,mouseY,5,5,1,0))
+    // print(`dinners.push(new food(${mouseX},${mouseY},5,5,1,0))`)
+}
+
+   // yes
      
     
     for (let i = 0; i < dinners.length; i++) {
@@ -287,13 +304,13 @@ for (i of ghosts) {
     }
 
 // score 
-textSize(100)
+textSize(20)
 fill(255,0,200)
-text(score,mouseX,mouseY,500)
+text(score,300,50,500)
 fill(255,255,255)
     // yes 
   
-    pac.w = 20
+    // pac.w = 18
     // pac.most.left=    200
 
 
@@ -302,120 +319,127 @@ fill(255,255,255)
     handleWalls.right(pac)
     handleWalls.up(pac)
     handleWalls.down(pac)
-    // ghost collistion to walls // yes 
-    for (ghost_everyEx of ghosts) {
-                // yes 
-            let down_walls = []
-            for (var j=0; j<walls.length; j++) { // floor
-            
-              // floors[0].debug()
-              // floors[1].debug()
-              // floors[2].debug()
-              if (walls[j].char_above(ghost_everyEx)) {
-                // print(`${}`) 
-                  // print('set to ')
-                  // print(j)
-                // pac.most.down = 
-                  down_walls.push(walls[j].y -  walls[j].h/2-ghost_everyEx.h/2 )
-                  // print(down_walls) 
-                  // find min and set it 
-               
-                // print('ground changed to ' + floors[j].y)
-              }else {
-                // print(false)
-                // characters[0].ground=400
-              }
-            }
-               down_walls.sort()
-                  if (down_walls.length != 0 ) {
-                ghost_everyEx.most.down = down_walls[0]
-                      // print(`${down_walls}`)
-                  }
-            let up_walls = []
-            for (var j=0; j<walls.length; j++) { // floor
-            
-              // floors[0].debug()
-              // floors[1].debug()
-              // floors[2].debug()
-              if (walls[j].char_below(ghost_everyEx)) {
-                // print(`${}`) 
-                  // print('set to ')
-                  // print(j)
-                // pac.most.down = 
-                  up_walls.push(walls[j].y +  walls[j].h/2+ghost_everyEx.h/2 )
-                  // print(down_walls) 
-                  // find min and set it 
-               
-                // print('ground changed to ' + floors[j].y)
-              }else {
-                // print(false)
-                // characters[0].ground=400
-              }
-            }
-               up_walls.sort()
-                  if (up_walls.length != 0 ) {
-                ghost_everyEx.most.up = up_walls[0]
-                      // print(`${up_walls}`)
-                      // print(up_walls)// double chech sort command needing to be reversed
-                  }
-            let right_walls = []
-            for (var j=0; j<walls.length; j++) { // floor
-            
-              // floors[0].debug()
-              // floors[1].debug()
-              // floors[2].debug()
-              if (walls[j].char_left(ghost_everyEx)) {
-                // print(`${}`) 
-                  
-                  // print('set to ')
-                  // print(j)
-                // pac.most.down = 
-                  right_walls.push(walls[j].x -  walls[j].w/2-ghost_everyEx.w/2 )
-                  // print(down_walls) 
-                  // find min and set it 
-               
-                // print('ground changed to ' + floors[j].y)
-              }else {
-                // print(false)
-                // characters[0].ground=400
-              }
-            }
-               right_walls.sort()
-                  if (right_walls.length != 0 ) {
-                ghost_everyEx.most.right = right_walls[0]
-                  }
-         
-               let left_walls = []
-            for (var j=0; j<walls.length; j++) { // floor
-            
-              // floors[0].debug()
-              // floors[1].debug()
-              // floors[2].debug()
-              if (walls[j].char_right(ghost_everyEx)) {
-                // print(`${}`) 
-                  // print('set to ')
-                  // print(j)
-                // pac.most.down = 
-                  left_walls.push(walls[j].x +  walls[j].w/2+pac.w/2 )
-                  // print(down_walls) 
-                  // find min and set it 
-               
-                // print('ground changed to ' + floors[j].y)
-              }else {
-                // print(false)
-                // characters[0].ground=400
-              }
-            }
-               left_walls.sort()
-            // print(left_walls)
-                  if (left_walls.length != 0 ) {
-                // pac.most.left = left_walls[left_walls.length-1]
-                ghost_everyEx.most.left = left_walls[0]
-                      // print(`${left_walls}`)
-                      // print(left_walls)
-                  }
-            // pac.w = 20
+    for (item of ghosts) {
+        handleWalls.left(item)
+        handleWalls.right(item)
+        handleWalls.up(item)
+        handleWalls.down(item)
+
     }
+    // ghost collistion to wasalls // yes 
+    // for (ghost_everyEx of ghosts) {
+    //             // yes 
+    //         let down_walls = []
+    //         for (var j=0; j<walls.length; j++) { // floor
+            
+    //           // floors[0].debug()
+    //           // floors[1].debug()
+    //           // floors[2].debug()
+    //           if (walls[j].char_above(ghost_everyEx)) {
+    //             // print(`${}`) 
+    //               // print('set to ')
+    //               // print(j)
+    //             // pac.most.down = 
+    //               down_walls.push(walls[j].y -  walls[j].h/2-ghost_everyEx.h/2 )
+    //               // print(down_walls) 
+    //               // find min and set it 
+               
+    //             // print('ground changed to ' + floors[j].y)
+    //           }else {
+    //             // print(false)
+    //             // characters[0].ground=400
+    //           }
+    //         }
+    //            down_walls.sort()
+    //               if (down_walls.length != 0 ) {
+    //             ghost_everyEx.most.down = down_walls[0]
+    //                   // print(`${down_walls}`)
+    //               }
+    //         let up_walls = []
+    //         for (var j=0; j<walls.length; j++) { // floor
+            
+    //           // floors[0].debug()
+    //           // floors[1].debug()
+    //           // floors[2].debug()
+    //           if (walls[j].char_below(ghost_everyEx)) {
+    //             // print(`${}`) 
+    //               // print('set to ')
+    //               // print(j)
+    //             // pac.most.down = 
+    //               up_walls.push(walls[j].y +  walls[j].h/2+ghost_everyEx.h/2 )
+    //               // print(down_walls) 
+    //               // find min and set it 
+               
+    //             // print('ground changed to ' + floors[j].y)
+    //           }else {
+    //             // print(false)
+    //             // characters[0].ground=400
+    //           }
+    //         }
+    //            up_walls.sort()
+    //               if (up_walls.length != 0 ) {
+    //             ghost_everyEx.most.up = up_walls[0]
+    //                   // print(`${up_walls}`)
+    //                   // print(up_walls)// double chech sort command needing to be reversed
+    //               }
+    //         let right_walls = []
+    //         for (var j=0; j<walls.length; j++) { // floor
+            
+    //           // floors[0].debug()
+    //           // floors[1].debug()
+    //           // floors[2].debug()
+    //           if (walls[j].char_left(ghost_everyEx)) {
+    //             // print(`${}`) 
+                  
+    //               // print('set to ')
+    //               // print(j)
+    //             // pac.most.down = 
+    //               right_walls.push(walls[j].x -  walls[j].w/2-ghost_everyEx.w/2 )
+    //               // print(down_walls) 
+    //               // find min and set it 
+               
+    //             // print('ground changed to ' + floors[j].y)
+    //           }else {
+    //             // print(false)
+    //             // characters[0].ground=400
+    //           }
+    //         }
+    //            right_walls.sort()
+    //               if (right_walls.length != 0 ) {
+    //             ghost_everyEx.most.right = right_walls[0]
+    //               }
+         
+    //            let left_walls = []
+    //         for (var j=0; j<walls.length; j++) { // floor
+            
+    //           // floors[0].debug()
+    //           // floors[1].debug()
+    //           // floors[2].debug()
+    //           if (walls[j].char_right(ghost_everyEx)) {
+    //             // print(`${}`) 
+    //               // print('set to ')
+    //               // print(j)
+    //             // pac.most.down = 
+    //               left_walls.push(walls[j].x +  walls[j].w/2+pac.w/2 )
+    //               // print(down_walls) 
+    //               // find min and set it 
+               
+    //             // print('ground changed to ' + floors[j].y)
+    //           }else {
+    //             // print(false)
+    //             // characters[0].ground=400
+    //           }
+    //         }
+    //            left_walls.sort()
+    //         // print(left_walls)
+    //               if (left_walls.length != 0 ) {
+    //             // pac.most.left = left_walls[left_walls.length-1]
+    //             ghost_everyEx.most.left = left_walls[0]
+    //                   // print(`${left_walls}`)
+    //                   // print(left_walls)
+    //               }
+    //         // pac.w = 20
+    // }
      for (wall of walls) {
         wall.show(255,255,255)
      }
@@ -428,14 +452,30 @@ fill(255,255,255)
       //  text("YOU WIN",100,100)
 
         game_won = true
+        game_winner_decided = true 
     }
     if ((game_over === false && game_won === true) || (dinners.length === 0)) {
         game_winner_decided = true 
     }
     if (game_winner_decided === true) {
-        text("YOU WIN",57,85)
+        textSize(27) 
+        fill(255,0,200)
+        stroke(115, 3, 3)
+        text("YOU WIN",56,29)
     }
     pac.show()
+    if (pac.x <= 55) {
+        // pac.most.left = 55
+        pac.most.right = 513
+        pac.x = 529
+        print('change')
+    }
+     if (pac.x >530) {
+         pac.most.left = 55
+        pac.x = 71
+        print('change')
+    }
+
 
     
     // adding walls in simple way 
@@ -573,7 +613,8 @@ class food {
         fill(255,255,255)
     }
     show() {
-       ellipse(this.food_x,this.food_y,this.food_w,this.food_h)
+fill(255)      
+        ellipse(this.food_x,this.food_y,this.food_w,this.food_h)
     }
         
     
@@ -681,10 +722,10 @@ class Floor {
       return (Math.abs(char.y-this.y) <= this.h/2+char.w/2) && (char.x +char.w/2<= this.x-this.w/2)
   } 
   char_right(char) {
-    // return (char.y < this.y+this.h/2) && (char.x+char.w/2>this.x) &&(char.x-char.w/2<this.x+this.w)
+      // return (char.y < this.y+this.h/2) && (char.x+char.w/2>this.x) &&(char.x-char.w/2<this.x+this.w)
       return (char.y+ char.h/2 >= this.y - this.h /2 ) && (char.y- char.h/2 <= this.y + this.h /2 ) && (char.x - char.w/2+5>= this.x+this.w/2)
-  } 
-  
+    } 
+    
 }
 
 class Pac {
@@ -693,6 +734,15 @@ class Pac {
         this.y = y 
         this.w = w 
         this.h = w
+        this.lives = 5 
+        // this.live_pacs = []
+        // for (let i=1; i<=this.lives; i++) {
+        //     this.live_pacs.push(new Point(416+mouseX*i,19,5,5))
+        // }
+        this.live_pacs = []
+        for (let i=1; i<=this.lives; i++) {
+            this.live_pacs.push(new Point(373+(400/600*50)*i,432/600*30,5,5))
+        }
         // this.speed = 4.125; 
         this.speed = 5; 
         this.deg = 0
@@ -702,6 +752,18 @@ class Pac {
         
         this.rotation= 0;
         this.theta = 45
+        this.maxAngle = 45
+        this.minAngle = 10
+        this.angleVel= 8+4
+        if (this.theta < this.maxAngle) {
+            // this.rotation += 1/
+            this.angleVel = 1
+        }
+        if (this.theta > this.minAngle) {
+            // this.rotation += 1/
+            this.angleVel = -1
+        }
+
         //       pac.x += char_speed
          // rotation_of_pac_man = 0
         this.most  =  {
@@ -714,13 +776,38 @@ class Pac {
             // down:1,
         }
     }
+    update() {
+        // animate 
+
+        this.theta += this.angleVel
+
+        if (this.theta >= this.maxAngle) {
+            this.angleVel*= -1
+        }else if (this.theta <= this.minAngle) {
+            this.angleVel*= -1
+ 
+        }
+        // }else if (this.rotation > this.minAngle) {
+            
+        //     this.rotation -= 1
+        // }else {
+        //     // this.rotation = this.maxAngle
+        // }
+    }
     follow() {
         this.x = mouseX 
         this.y = mouseY 
         
     }
     show() {
+        this.live_pacs = []
+        for (let i=1; i<=this.lives; i++) {
+            this.live_pacs.push(new Point(373+(400/600*50)*i,432/600*30,5,5))
+        }
         this.h = this.w 
+        for (item of this.live_pacs) {
+            item.show()
+        }
         /////
     noStroke()
         // this.framesAlive += 1 
@@ -779,22 +866,26 @@ class Pac {
         }
     }
     right() {
+        this.update()
                this.x += this.speed
         
          this.rotation = 0
         this.check_border()
     }
     left() {
+        this.update()
                this.x -= this.speed
          this.rotation = 180
         this.check_border()
     }
     up() {
+        this.update()
                this.y -= this.speed
          this.rotation = 270
         this.check_border()
     }
     down() {
+        this.update()
                this.y += this.speed
          this.rotation = 90
         this.check_border()
@@ -861,13 +952,28 @@ function keyPressed() {
 //     }
     
 // }
+class Point {
+    constructor(x,y) {
+        this.x = x 
+        this.y=y
+        // this.w = 5
+        this.w = 23
+        this.theta = 45
+        this.rotation = 0
+    }
+    show() {
+        noStroke()
+        fill(255)
+        arc(this.x,this.y,this.w, this.w, this.theta+this.rotation, 0-this.theta+this.rotation,);
+    }
+}
 class ghost {
     constructor(x,y,w,h) {
         this.x = x
         this.y = y
         this.w = w
         this.h = h    
-        this.ghost_speed = 8
+        this.ghost_speed = 2
         this.random_move = random(0,4)
         this.move = false
         this.secs_in = 0
@@ -904,62 +1010,56 @@ class ghost {
         }
    
     }
+    circle_show() {
+        fill(143, 7, 0)
+        ellipse(this.x, this.y,this.w,this.h)
+        this.check_border()
+    }
     ghost_blue() {
-        image(blue_ghost,this.x,this.y,this.w,this.h)
+        // image(blue_ghost,this.x,this.y,this.w,this.h)
         this.check_border()
     }
     ghost_orange() { 
         // image(orange_ghost,this.x,this.y,this.w,this.h)
-        image(orange_ghost,this.x,this.y,this.w,this.h)
+        // image(orange_ghost,this.x,this.y,this.w,this.h)
         this.check_border()
     }
     ghost_pink() {
         // image(pink_ghost,this.x,this.y,this.w,this.h)
-        image(pink_ghost,this.x,this.y,this.w,this.h)
+        // image(pink_ghost,this.x,this.y,this.w,this.h)
         this.check_border()
     }
     ghost_red() {
         // image(red_ghost,this.x,this.y,this.w,this.h)
-        image(red_ghost,this.x,this.y,this.w,this.h)
+        // image(red_ghost,this.x,this.y,this.w,this.h)
         this.check_border()
     }
 
     // right left bac forward 
     right() {
        
-        if ((this.x+this.w-this.ghost_speed<screen) && this.move == true) {
-         this.x += this.ghost_speed
-         
-     }else {
-         this.x = screen - this.w/2
-     }
+        this.x += this.ghost_speed
         
-    }
+        //     if ((this.x+this.w-this.ghost_speed<screen) && this.move == true) {
+            //      this.x += this.ghost_speed
+            
+            //  }else {
+                //      this.x = screen - this.w/2
+                //  }
+                
+        }
     left() {
+
         
-              if ((this.x-this.w+this.ghost_speed>0)  && this.move == true) {
-                   this.x -= this.ghost_speed
-                   
-               }else  {
-                   this.x = this.w/2 
-               }
+              
+        this.x -= this.ghost_speed
     }
     up() {
-         
-        if ((this.y-this.w+this.ghost_speed>0)  && this.move == true) {
-             this.y -= this.ghost_speed
-             
-         }else  {
-             this.y = this.w/2 - 10
-         }
+        this.y -= this.ghost_speed
     }
     down() {
-    if ((this.y+this.w-this.ghost_speed<screen) && this.move == true) {
-         this.y += this.ghost_speed
-         
-     }else {
-         this.y = screen - this.w/2 + 7
-     }
+        this.y += this.ghost_speed
+    
     }
     start_moving() {
         this.move = true
@@ -981,6 +1081,10 @@ class ghost {
             return false;
         }
     }
+    collided(pac) {
+        return (dist(pac.x,pac.y,this.x,this.y)<this.w/2 + pac.w/2-15) 
+    }
+
     reset_move() {
         this.random_move = random(0,16)
     }
@@ -1044,14 +1148,39 @@ let y1 = 300;
 function lvl_1() { // yes
         dinners = []
         // dinners.push(new food(300,300,150,150,100,0))
-            dinners.push(new food(117, 104.60000038146973,20,20,10,0))
-            dinners.push(new food(117, 409.6000003814697,20,20,10,0))
-            dinners.push(new food(493, 104.60000038146973,20,20,10,0))
-            dinners.push(new food(495 ,405.6000003814697,20,20,10,0))
+            dinners.push(new food(121,465,20,20,10,0))
+            dinners.push(new food(121, 134,20,20,10,0))
+            dinners.push(new food(493, 134,20,20,10,0))
+            dinners.push(new food(493 ,465,20,20,10,0))
 
+
+            dinners.push(new food(335,356,5,5,1,0))
+            dinners.push(new food(264,356,5,5,1,0))
+            dinners.push(new food(264,244,5,5,1,0))
+            dinners.push(new food(335,244,5,5,1,0))
 
     
             dinners.push(new food(300 ,300,40,40,20,0))
+    let min = 103+1+4
+            for (let i=min; i<502; i+=30) {
+                dinners.push(new food(i,180,5,5,1,0))
+              }
+            for (let i=min; i<502; i+=30) {
+                dinners.push(new food(i,420,5,5,1,0))
+              }
+            for (let i=min; i<502; i+=30) {
+                dinners.push(new food(i,505,5,5,1,0))
+              }
+            for (let i=min; i<502; i+=30) {
+                dinners.push(new food(i,95,5,5,1,0))
+              }
+            //   for (let i=min; i<600-min; i+=50) {
+            //     dinners.push(new food(i,420,5,5,1,0))
+            //   }
+            //   for (let i=min; i<600-min; i+=50) {
+            //     dinners.push(new food(i,505,5,5,1,0))
+            //   }
+
            // for (let i=0;i<60;i++) {
            //     dinners.push(new food(i*5+10,100,3,3,1*num_of_ghosts+1,0))
            // }
@@ -1066,12 +1195,8 @@ function lvl_1() { // yes
            // }
            // pac 
        
-        char_x =  screen/2
- char_y =  screen/2
- char_width = screen/10
- char_speed =  char_width/12
-    pac = new Pac(char_x,char_y,char_width,char_width)
-    pac = new Pac(287,475,char_width,char_width)
+     
+    pac = new Pac(287,475,18,18)
        
        
        // walls
@@ -1119,11 +1244,11 @@ function lvl_1() { // yes
     walls.push(new Floor(236,289,9,100,color(255,0,0)))
     walls.push(new Floor(360,289,9,100,color(255,0,0)))
 
-    walls.push(new Floor(250,286,32,11,color(255,0,0)))
-    walls.push(new Floor(350,286,32,11,color(255,0,0)))
+    walls.push(new Floor(250,286,30,11,color(255,0,0)))
+    walls.push(new Floor(350,286,30,11,color(255,0,0)))
 
-    walls.push(new Floor(298,368,11,81,color(255,0,0)))
-    walls.push(new Floor(298,232,11,81,color(255,0,0)))
+    walls.push(new Floor(298,368,11,79,color(255,0,0)))
+    walls.push(new Floor(298,232,11,79,color(255,0,0)))
     // border walls 
     walls.push(new Floor(146,197,108,14,color(255,0,0)))
     walls.push(new Floor(146,250,108,14,color(255,0,0)))
@@ -1145,11 +1270,15 @@ function lvl_1() { // yes
     // walls.push(new Floor(426,310,144,47,color(255,0,0))) 
     // walls.push(new Floor(426,310,144,47,color(255,0,0))) 
     
-       print(ghost)
-       for (let i=0;i<num_of_ghosts; i++) {
-               ghosts.push(new ghost(random(0,screen),random(0,screen),ghost_size_w,ghost_size_h))
-        }
-    ghosts = []
+    //    print(ghost)
+    //    for (let i=0;i<num_of_ghosts; i++) {
+    ghosts.push(new ghost(238,128,20,20))
+    ghosts.push(new ghost(360,130,20,20))
+    ghosts.push(new ghost(137,284,20,20))
+    ghosts.push(new ghost(476,278,20,20))
+    // ghosts.(new ghost(random(0,screen),random(0,screen),20,20))  
+        // }
+    // ghosts = []
           // print(dinners)
 //            ghosts.push(new ghost(random(0,screen),random(0,screen),50,50))
 // ghosts.push(new ghost(random(0,screen),random(0,screen),50,50))
@@ -1203,7 +1332,7 @@ function calculate_total_points() {
     total_points = 0
     // print( "total Points = "+total_points)
     for (i of dinners) {
-        
+        total_points += i.pac_points
  //      if ((i.food_y>screen- 50) || (i.food_y<=10) || (i.food_x>=screen - 50) || //(i.food_x<=10) ) {
  //         
 //
@@ -1211,27 +1340,27 @@ function calculate_total_points() {
  //           total_points += i.pac_points
  //       }
 
- if ((i.food_y>= screen - 20)) {
- //    print(1)
-//     print(i)
-      dinners.splice(i,1)
- }else  if ((i.food_y<=  20)) {
-//      print(2)
-// print(i)
- dinners.splice(i,1)
- }else  if ((i.food_x>= screen - 20)) {
-//     print(3)
-//print(i)
- dinners.splice(i,1)
- }else  if ((i.food_x <=  20)) {
-  //   print(4)
-  //   print(i)
- dinners.splice(i,1)
- }else {
-total_points += i.pac_points
-     // print("say cheese")
-    // dinners.splice(/i,1)
- }
+//  if ((i.food_y>= screen - 20)) {
+//  //    print(1)
+// //     print(i)
+//       dinners.splice(i,1)
+//  }else  if ((i.food_y<=  20)) {
+// //      print(2)
+// // print(i)
+//  dinners.splice(i,1)
+//  }else  if ((i.food_x>= screen - 20)) {
+// //     print(3)
+// //print(i)
+//  dinners.splice(i,1)
+//  }else  if ((i.food_x <=  20)) {
+//   //   print(4)
+//   //   print(i)
+//  dinners.splice(i,1)
+//  }else {
+// total_points += i.pac_points
+//      // print("say cheese")
+//     // dinners.splice(/i,1)
+//  }
               
     }
 // print( "total Points = "+total_points)
@@ -1382,7 +1511,7 @@ class HandleWalls {// yes
     constructor() {
         this.walls = [] 
     }
-    left() {// changes most.left barrier of pac by detecting location of walss
+    left(pac) {// changes most.left barrier of pac by detecting location of walss
         let left_walls = []
         let item
         // find all walls left of pac 
