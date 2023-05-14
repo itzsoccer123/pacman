@@ -1272,6 +1272,7 @@ function lvl_1(lives) { // yes
     
     //    print(ghost)
     //    for (let i=0;i<num_of_ghosts; i++) {
+	ghosts = []
     ghosts.push(new ghost(238,128,20,20))
     ghosts.push(new ghost(360,130,20,20))
     ghosts.push(new ghost(137,284,20,20))
