@@ -467,6 +467,12 @@ fill(255,255,255)
         fill(255,0,200)
         stroke(115, 3, 3)
         text("YOU WIN",56,29)
+    }else if (pac.lives === 0) {
+        textSize(27) 
+        fill(255,0,200)
+        stroke(115, 3, 3)
+        text("Game Over",56,29)
+    
     }
     pac.show()
     if (pac.x <= 55) {
@@ -483,6 +489,10 @@ fill(255,255,255)
 
 
     
+textSize(20)
+fill(255,0,200)
+text(score,300,50,500)
+fill(255,255,255)
     // adding walls in simple way 
     // yes
         // if (chosing_pos) {
