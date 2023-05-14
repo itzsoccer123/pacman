@@ -1082,7 +1082,7 @@ class ghost {
         }
     }
     collided(pac) {
-        return (dist(pac.x,pac.y,this.x,this.y)<this.w/2 + pac.w/2-15) 
+        return (dist(pac.x,pac.y,this.x,this.y)<this.w/2 + pac.w/2) 
     }
 
     reset_move() {
