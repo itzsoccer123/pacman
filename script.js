@@ -121,7 +121,7 @@ ghosts = []
     // ghosts.push(new ghost(random(0,screen),random(0,screen),50,50))
     // ghosts.push(new ghost(random(0,screen),random(0,screen),50,50))
     // ghosts.push(new ghost(random(0,screen),random(0,screen),50,50))
- lvl_1()
+ lvl_1(5)
    handleWalls = new HandleWalls()
     handleWalls.walls = walls 
   // delete_extra_food(30)
@@ -273,7 +273,7 @@ for (i of ghosts) {
         pac.lives -= 1 
         game_over = true  
         // setup()
-        lvl_1()
+        lvl_1(pac.lives)
         draw()
                  
     }
@@ -1145,7 +1145,7 @@ let y1 = 300;
     let w1 = 100; 
     let h1 = 100;
 
-function lvl_1() { // yes
+function lvl_1(lives) { // yes
         dinners = []
         // dinners.push(new food(300,300,150,150,100,0))
             dinners.push(new food(121,465,20,20,10,0))
@@ -1197,7 +1197,7 @@ function lvl_1() { // yes
        
      
     pac = new Pac(287,475,18,18)
-       
+    pac.lives = lives;
        
        // walls
     // yes 
