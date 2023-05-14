@@ -269,9 +269,14 @@ for (i of ghosts) {
     // if (i.collision(pac.x,pac.y,pac.w)== true && game_winner_decided=== false) {
     if (i.collided(pac) && !game_winner_decided) {
       //  print("game over")
+	  
         // score = "game over"
         pac.lives -= 1 
-        game_over = true  
+        if (pac.lives === 0) {
+		score = "game over"
+		noLoop();
+	}
+	   game_over = true  
         // setup()
         lvl_1(pac.lives)
         draw()
